@@ -6,6 +6,9 @@ use \Respect\Validation\Validator as v;
 
 class RecipesController extends BaseController
 {
+    private $newFile = __DIR__ . '/../../public/recipes.csv';
+    private $filename = __DIR__ . '/../../public/recipes.csv';
+
     /**
      * Paginate-able list of recipes
      *
@@ -123,7 +126,7 @@ class RecipesController extends BaseController
                 'message' => $exception->getMessages()
            ];
 
-           return $response->withJson($body, 400);
+           return $response->withJson($body, 200);
         }
 
         $newRecipe = [];
@@ -137,30 +140,29 @@ class RecipesController extends BaseController
         $newRecipe['box_type']                  = $input->box_type;
         $newRecipe['title']                     = $input->title;
         $newRecipe['slug']                      = str_replace(' ', '-', strtolower($input->title));
-        $newRecipe['short_title']               = isset($input->short_title) ? : '';
+        $newRecipe['short_title']               = isset($input->short_title) ? $input->short_title : '';
         $newRecipe['marketing_description']     = $input->marketing_description;
         $newRecipe['calories_kcal']             = $input->calories_kcal;
         $newRecipe['protein_grams']             = $input->protein_grams;
         $newRecipe['fat_grams']                 = $input->fat_grams;
         $newRecipe['carbs_grams']               = $input->carbs_grams;
-        $newRecipe['bulletpoint1']              = isset($input->bulletpoint1) ? : '';
-        $newRecipe['bulletpoint2']              = isset($input->bulletpoint2) ? : '';
-        $newRecipe['bulletpoint3']              = isset($input->bulletpoint3) ? : '';
+        $newRecipe['bulletpoint1']              = isset($input->bulletpoint1) ? $input->bulletpoint1 : '';
+        $newRecipe['bulletpoint2']              = isset($input->bulletpoint2) ? $input->bulletpoint2 : '';
+        $newRecipe['bulletpoint3']              = isset($input->bulletpoint3) ? $input->bulletpoint3 : '';
         $newRecipe['recipe_diet_type_id']       = $input->recipe_diet_type_id;
         $newRecipe['season']                    = $input->season;
-        $newRecipe['base']                      = isset($input->base) ? : '';
+        $newRecipe['base']                      = isset($input->base) ? $input->base : '';
         $newRecipe['protein_source']            = $input->protein_source;
         $newRecipe['preparation_time_minutes']  = $input->preparation_time_minutes;
         $newRecipe['shelf_life_days']           = $input->shelf_life_days;
         $newRecipe['equipment_needed']          = $input->equipment_needed;
         $newRecipe['origin_country']            = $input->origin_country;
         $newRecipe['recipe_cuisine']            = $input->recipe_cuisine;
-        $newRecipe['in_your_box']               = isset($input->in_your_box) ? : '';
+        $newRecipe['in_your_box']               = isset($input->in_your_box) ? $input->in_your_box : '';
         $newRecipe['gousto_reference']          = $input->gousto_reference;
+        $newRecipe['rating']                    = isset($input->base) ? $input->base : '';
 
-        $newfile = __DIR__ . '/../../public/recipes.csv';
-
-        $file = fopen($newfile,"a");
+        $file = fopen($this->newFile,"a");
         fputcsv($file, $newRecipe);
         fclose($file);
 
@@ -197,7 +199,7 @@ class RecipesController extends BaseController
                 'message' => $exception->getMessages()
             ];
 
-           return $response->withStatus(400)->write(json_encode($body));
+           return $response->withJson($body, $body);
         }
 
         foreach ($data as $num => $recipe) {
@@ -210,9 +212,8 @@ class RecipesController extends BaseController
                     $data[$num][$key] = $value;
                 }
 
-                $filename = __DIR__ . '/../../public/recipes.csv';
-
-                $file = fopen($filename,"w");
+                // write to file
+                $file = fopen($this->filename,"w");
                 foreach ($data as $singleData) {
                     fputcsv($file, $singleData);
                 }
@@ -220,20 +221,20 @@ class RecipesController extends BaseController
                 fclose($file);
 
                 $body = [
-                    'ok'        => 'ok',
+                    'status'        => 'ok',
                     'message'   => 'Recipe updated'
                 ];
 
-                return $response->withStatus(200)->write(json_encode($body));
+                return $response->withJson($body, 200);
             }
         }
 
         $body = [
-            'status'  => 'error',
+            'status'  => 'ok',
             'message' => 'Recipe not found'
         ];
 
-        return $response->withStatus(400)->write(json_encode($body));
+        return $response->withJson($body, 200);
     }
 
     /**
@@ -265,16 +266,14 @@ class RecipesController extends BaseController
                 'message' => $exception->getMessages()
             ];
 
-           return $response->withStatus(400)->write(json_encode($body));
+           return $response->withJson($body, 200);
         }
 
         foreach ($data as $num => $recipe) {
             if (array_search($id, $recipe)) {
                 $data[$num]['rating'] = $rating;
 
-                $filename = __DIR__ . '/../../public/recipes.csv';
-
-                $file = fopen($filename,"w");
+                $file = fopen($this->newFile,"w");
                 foreach ($data as $singleData) {
                     fputcsv($file, $singleData);
                 }
@@ -286,7 +285,7 @@ class RecipesController extends BaseController
                     'message' => 'Recipe rating updated'
                 ];
 
-                return $response->withStatus(200)->write(json_encode($body));
+                return $response->withJson($body, 200);
             }
         }
 
@@ -295,6 +294,6 @@ class RecipesController extends BaseController
             'message' => 'Recipe not found'
         ];
 
-        return $response->withStatus(400)->write(json_encode($body));
+        return $response->writeJson($body, 200);
     }
 }
