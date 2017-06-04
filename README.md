@@ -1,7 +1,7 @@
 # Recipes API
 
 <ul>
-<li>To use the API, simply clone the repository and start making calls to public/{method_name_goes_here}. The API will read data from
+<li>To use the API, simply clone the repository and start making calls using a REST client to public/{method_name_goes_here}. The API will read data from
 the csv file, create another csv file to store / update data. Afterwards it will only open the original csv to get the column / header
 names.</li>
 <li>To create this API I used Slim 3.0 micro framework as it is lightweight (very small codebase), fast, has minimal overhead
