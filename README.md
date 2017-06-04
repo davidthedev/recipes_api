@@ -15,8 +15,9 @@
             <td>GET</td>
             <td>
                 recipe_cuisine (optional) - Fetch all recipes for a specific cuisine<br>
+                <strong>Pagination</strong><br>
                 current_page (optional) - Current page number<br>
-                per_page (optional) - Number of recipes per page to show
+                per_page (optional) - Number of recipes per to show per page
             </td>
             <td>returns all / filtered recipes</td>
         </tr>
@@ -32,6 +33,7 @@
             <td>/recipes</td>
             <td>POST</td>
             <td>
+                <strong>All params are mandatory</strong><br>
                 box_type - box type<br>
                 title - recipe title<br>
                 marketing_description - marketing description<br>
@@ -55,6 +57,7 @@
             <td>/recipes/{id}</td>
             <td>PUT</td>
             <td>
+                <strong>All params are optional</strong><br>
                 box_type - box type<br>
                 title - recipe title<br>
                 marketing_description - marketing description<br>
@@ -72,13 +75,13 @@
                 recipe_cuisine - recipe cuisine<br>
                 gousto_reference - gousto reference<br>
             </td>
-            <td>update an existing recipe</td>
+            <td>updates an existing recipe</td>
         </tr>
         <tr>
             <td>/recipes/{id}/rating</td>
             <td>PUT</td>
             <td>
-                rating - rate a recipe by givinhg a score of 1 tp 5<br>
+                rating - rate a recipe by giving a score betwwen 1 and 5<br>
             </td>
             <td>rates a recipe</td>
         </tr>
