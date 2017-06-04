@@ -11,7 +11,7 @@ require '../vendor/autoload.php';
 // app settings
 $settings = [
     'settings' => [
-        'displayErrorDetails' => true,
+        'displayErrorDetails' => false,
     ]
 ];
 
@@ -76,6 +76,14 @@ $container['Data'] = function ($container) {
 // Recipes Controller
 $container['RecipesController'] = function ($container) {
     return new \App\Controllers\RecipesController($container);
+};
+
+// Set Not found handler
+$container['notFoundHandler'] = function ($container) {
+    return function ($request, $response) use ($container) {
+        return $container['response']
+            ->withJson(['status' => 'error', 'message' => 'page not found'], 404);
+    };
 };
 
 // require routes
