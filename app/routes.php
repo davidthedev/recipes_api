@@ -12,5 +12,5 @@ $app->post('/recipes', 'RecipesController:create');
 // PUT / update a recipe
 $app->put('/recipes{id}', 'RecipesController:update');
 
-// PUT / rate a recipe
-$app->put('/recipes/{id}/rating', 'RecipesController:rate');
+// PATCH / rate a recipe
+$app->patch('/recipes/{id}/rating', 'RecipesController:rate');
