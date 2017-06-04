@@ -1,5 +1,15 @@
 # Recipes API
 
+<ul>
+<li>To create this API I used Slim 3.0 micro framework as it is lightweight (very small codebase), fast, has minimal overhead
+and contains bare necessities which makes it perfect to build APIs. Slim essentially receives and process a HTTP request
+and returns a HTTP response. Additionally, it provides other additional helpful tools (redirects, helper functions, error handling, etc.).</li>
+
+<li>To cater for both mobile and web application, an indetifier for the source of the request could be used to decide on what data to send back.
+Another way to optimise for mobile apps, so instead of full api response let the client specify which fields should be returned. For example,
+/recipes could become /recipes?fields=title,season,recipe_cuisine.</li>
+</ul>
+
 <table>
     <thead>
         <tr>
