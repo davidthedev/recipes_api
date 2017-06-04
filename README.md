@@ -2,7 +2,7 @@
 
 <ul>
 <li>To use the API, simply clone the repository and start making calls to public/{method_name_goes_here}. The API will read data from
-the csv file, create another csv file to store / update data. Afterwards it will only open the original cvs to get the column / header
+the csv file, create another csv file to store / update data. Afterwards it will only open the original csv to get the column / header
 names.</li>
 <li>To create this API I used Slim 3.0 micro framework as it is lightweight (very small codebase), fast, has minimal overhead
 and contains bare necessities which makes it perfect to build APIs. Slim essentially receives and process a HTTP request
